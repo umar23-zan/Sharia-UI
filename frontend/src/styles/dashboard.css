@@ -1,0 +1,283 @@
+/* dashboard.css */
+.dashboard-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 16px;
+  background-color: #f9fafb;
+  overflow: hidden;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.dashboard-user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dashboard-avatar {
+  width: 32px;
+  height: 32px;
+  background-color: #e5e7eb;
+  border-radius: 50%;
+}
+
+.dashboard-header-icons {
+  display: flex;
+  gap: 16px;
+}
+
+.dashboard-icon {
+  color: #4b5563;
+  cursor: pointer;
+}
+
+.dashboard-search-container {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.dashboard-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+}
+
+.dashboard-search-input {
+  width: 90%;
+  padding: 12px 12px 12px 40px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 16px;
+}
+
+.dashboard-suggestions {
+  position: absolute;
+  top: calc(100% + 4px); /* Position below the search bar with a small gap */
+  left: 0;
+  right: 0;
+  background-color: white;
+  border-radius: 8px; /* More rounded corners */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* More pronounced shadow */
+  list-style-type: none;
+  padding: 10px 0; /* Add padding to the top and bottom */
+  margin: 0;
+  z-index: 10;
+  overflow: hidden; /* Clip border radius nicely */
+  border: 1px solid #eee; /* Add a subtle border */
+}
+
+.dashboard-suggestion-item {
+  padding: 10px;
+  cursor: pointer;
+  cursor: pointer;
+  font-size: 15px; /* Slightly reduce font size */
+  color: #333;
+  display: flex; /* Enable flexbox for item layout */
+  align-items: center; /* Vertically align items in suggestion */
+  gap: 10px; /* Space between logo and text */
+}
+
+.suggestion-logo {
+  width: 24px; /* Fixed size for logo */
+  height: 24px;
+  border-radius: 50%; /* Circular logos */
+  object-fit: contain; /* Ensure logo fits within circle */
+  background-color: #f8f9fa; /* Placeholder background if logo is missing */
+}
+
+.suggestion-text {
+  flex-grow: 1; /* Allow text to take up remaining space */
+}
+
+.suggestion-company-name {
+  font-weight: 500;
+  display: block; /* Ensure company name is on its line */
+}
+
+.suggestion-symbol {
+  font-size: 13px;
+  color: #777; /* Lighter color for symbol */
+  display: block; /* Ensure symbol is on its line */
+}
+
+.dashboard-suggestion-item:hover {
+  background-color: #f0f0f0;
+}
+
+
+
+.dashboard-categories-wrapper {
+
+  margin-bottom: 24px;
+
+}
+
+.dashboard-categories-container {
+  display: flex;
+  gap: 12px;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  padding: 4px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.dashboard-categories-container::-webkit-scrollbar {
+  display: none;
+}
+/* 
+.dashboard-scroll-button {
+  position: absolute;
+  z-index: 1;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-scroll-button.dashboard-left {
+  left: 0;
+}
+
+.dashboard-scroll-button.dashboard-right {
+  right: 0;
+} */
+
+.dashboard-category {
+  padding: 8px 16px;
+  border-radius: 20px;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.dashboard-halal {
+  background-color: #f3e8ff;
+  color: #7e22ce;
+}
+
+.dashboard-tech {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.dashboard-retail {
+  background-color: #fce7f3;
+  color: #be185d;
+}
+
+.dashboard-healthcare {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.dashboard-food{
+  background-color: #fff7ed;
+  color: #c2410c;
+}
+
+
+.dashboard-trending-section {
+  margin-bottom: 24px;
+}
+
+.dashboard-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.dashboard-trend-icon {
+  width: 24px;
+  height: 24px;
+  color: #4b5563;
+}
+
+.dashboard-stocks-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.dashboard-stock-card {
+  padding: 16px;
+  border-radius: 12px;
+  color: white;
+  position: relative;
+  cursor: pointer;
+}
+
+.dashboard-stock-heart {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.dashboard-stock-icon {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.dashboard-stock-card h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.dashboard-stock-card p {
+  margin: 4px 0 0;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.dashboard-news-section h2 {
+  margin-bottom: 16px;
+}
+
+.dashboard-news-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dashboard-news-card {
+  background-color: white;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.dashboard-news-card h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.dashboard-news-card p {
+  margin: 0;
+  font-size: 14px;
+  color: #4b5563;
+}
+
+/* @media (max-width: 640px) {
+  .dashboard-stocks-grid {
+    grid-template-columns: 1fr;
+  }
+} */

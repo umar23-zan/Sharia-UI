@@ -1,0 +1,65 @@
+.launch-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: #f8fafc;
+}
+
+.logo-container {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+}
+
+.logo {
+  width: 300px;
+  height: 100px;
+  border-radius: 8px;
+}
+
+.tagline {
+  font-size: 18px;
+  width: 300px;
+  color: #a7a7a7;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.auth-buttons {
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.button {
+  width: 100%;
+  padding: 0.875rem;
+  border-radius: 15px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+.primary {
+  background-color: #6366f1;
+  color: white;
+}
+
+.secondary {
+  background-color: white;
+  border: 1px solid #6366f1;
+  color: #1e293b;
+}
