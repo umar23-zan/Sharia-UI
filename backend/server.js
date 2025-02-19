@@ -5,6 +5,9 @@ const stockDataRoutes = require('./routes/stockDataRoutes');
 const watchlistRoutes = require('./routes/watchlist')
 const cors = require('cors');
 const app = express();
+require('dotenv').config();
+
+
 
 connectDB();
 

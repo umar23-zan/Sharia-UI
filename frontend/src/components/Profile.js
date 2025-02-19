@@ -38,7 +38,7 @@ const Profile = () => {
               </div>
               <h2 className="text-2xl font-semibold mb-1">{user?.name}</h2>
               <p className="text-gray-500 mb-4">{user?.email}</p>
-              <button className="w-full py-2.5 px-4 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors">
+              <button className="w-full py-2.5 px-4 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors cursor-pointer" onClick={()=>navigate('/editprofile')}>
                 Edit Profile
               </button>
             </div>
@@ -46,9 +46,9 @@ const Profile = () => {
             <div className="mt-4 bg-white rounded-2xl shadow-sm p-4">
               <h3 className="font-semibold mb-4">Quick Settings</h3>
               {[
-                { icon: '👤', title: 'Personal Info', subtitle: 'Complete your profile', path: '/personal-info' },
+                { icon: '👤', title: 'Personal Info', subtitle: 'Complete your profile', path: '/personaldetails' },
                 { icon: '🔔', title: 'Notifications', subtitle: 'Customize your alerts', badge: '4 new', path: '/notificationpage' },
-                { icon: '💳', title: 'Payment Methods', subtitle: 'Manage your payments', path: '/payment-methods' }
+                { icon: '💳', title: 'Payment Methods', subtitle: 'Manage your payments', path: '/paymentmethods' }
               ].map((item) => (
                 <button
                   key={item.title}

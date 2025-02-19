@@ -1,13 +1,55 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
-const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const User = require('../models/User');
 const router = express.Router();
 const multer = require('multer');
+const { uploadToS3, deleteFromS3 } = require('../config/s3config');
 const path = require('path');
+const fs = require('fs');
+const { OAuth2Client } = require('google-auth-library');
+require('dotenv').config();
 
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+router.post('/google-signup', async (req, res) => {
+    try {
+        const { sub, email, name, picture } = req.body; // Extract user data from request body
+
+        // Verify Google ID token
+        const ticket = await client.verifyIdToken({
+            idToken: req.headers.authorization, // Assuming the token comes in the authorization header
+            audience: process.env.GOOGLE_CLIENT_ID,
+        });
+        const payload = ticket.getPayload();
+        
+        // Check if the token is valid and the user IDs match
+        if (payload.sub!== sub) {
+            return res.status(401).json({ message: 'Invalid token' });
+        }
+
+        let user = await User.findOne({ email });
+
+        if (user) {
+            // User exists, log them in (create session or JWT)
+            // Replace with your login logic
+            res.json({ msg: 'Login successful', email: user.email, id: user._id });
+        } else {
+            // User does not exist, create a new user
+            user = new User({
+                name: name,
+                email: email,
+                profilePicture: picture, // Add profile picture if available
+            });
+            await user.save();
+            res.status(201).json({ msg: 'User registered successfully', email: user.email, id: user._id });
+        }
+    } catch (error) {
+        console.error('Google Sign-Up Error:', error);
+        res.status(500).json({ message: 'Google Sign-Up failed' });
+    }
+});
 
 // Signup Route
 router.post('/signup', async (req, res) => {
@@ -182,31 +224,60 @@ router.put('/user/:email', async (req, res) => {
     }
 });
 
-// Configure multer storage
-const storage = multer.diskStorage({
-    destination: './uploads/profilePictures',  // Specify the upload directory
-    filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`);
+// Configure multer for memory storage
+const storage = multer.memoryStorage();
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 5 * 1024 * 1024, // 5MB limit
+    },
+    fileFilter: (req, file, cb) => {
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+        if (!allowedTypes.includes(file.mimetype)) {
+            const error = new Error('Invalid file type. Only JPG and PNG allowed.');
+            error.code = 'INVALID_FILE_TYPE';
+            return cb(error, false);
+        }
+        cb(null, true);
     }
 });
-
-const upload = multer({ storage });
-// Route to upload profile picture
 router.post('/upload-profile-picture', upload.single('profilePicture'), async (req, res) => {
     try {
+        if (!req.file) {
+            return res.status(400).json({ msg: 'No file uploaded' });
+        }
+
         const email = req.body.email;
         const user = await User.findOne({ email });
         if (!user) return res.status(404).json({ msg: 'User not found' });
 
-        user.profilePicture = req.file.path;  // Save the file path to profilePicture
+        const fileUrl = await uploadToS3(req.file, email);
+
+        if (user.profilePicture) {
+            try {
+                await deleteFromS3(user.profilePicture);
+            } catch (error) {
+                console.error('Error deleting old profile picture:', error);
+                // Continue with the update even if delete fails
+            }
+        }
+        user.profilePicture = fileUrl;
         await user.save();
 
-        res.json({ msg: 'Profile picture uploaded successfully', profilePicture: user.profilePicture });
+        res.json({ 
+            msg: 'Profile picture uploaded successfully', 
+            // profilePicture: relativeFilePath 
+            profilePicture: user.profilePicture 
+        });
     } catch (error) {
         console.error(error);
+        if (error.code === 'INVALID_FILE_TYPE') {
+            return res.status(400).json({ msg: error.message });
+        }
         res.status(500).send('Server error');
     }
 });
+
 
 // Contact Us Route
 router.post('/contact-us', async (req, res) => {

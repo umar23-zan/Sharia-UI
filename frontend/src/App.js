@@ -14,6 +14,9 @@ import Profile from './components/Profile';
 import NotificationsPage from './components/NotificationPage';
 import News from './components/News';
 import TrendingStocks from './components/TrendingStocks';
+import EditProfile from './components/EditProfile';
+import PersonalDetails from './components/PersonalDetails';
+import PaymentMethods from './components/PaymentMethods';
 
 const App = () => {
   const userId = localStorage.getItem('userId');
@@ -89,6 +92,30 @@ const App = () => {
                     element={
                         <PrivateRoute>
                             <NotificationsPage />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/editprofile"
+                    element={
+                        <PrivateRoute>
+                            <EditProfile />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/personaldetails"
+                    element={
+                        <PrivateRoute>
+                            <PersonalDetails />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/paymentmethods"
+                    element={
+                        <PrivateRoute>
+                            <PaymentMethods />
                         </PrivateRoute>
                     }
                 />
